@@ -1,7 +1,7 @@
 {
-	"name": "got",
+	"name": "@xsahxl/got",
 	"version": "8.3.2",
-	"description": "Simplified HTTP requests",
+	"description": "Simplified HTTP requests (delete Electron)",
 	"license": "MIT",
 	"repository": "sindresorhus/got",
 	"maintainers": [
@@ -47,8 +47,7 @@
 		"wget",
 		"fetch",
 		"net",
-		"network",
-		"electron"
+		"network"
 	],
 	"dependencies": {
 		"@sindresorhus/is": "^0.7.0",
@@ -89,7 +88,6 @@
 		"concurrency": 4
 	},
 	"browser": {
-		"decompress-response": false,
-		"electron": false
+		"decompress-response": false
 	}
 }

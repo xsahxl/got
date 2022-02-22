@@ -17,8 +17,7 @@
 
 A nicer interface to the built-in [`http`](http://nodejs.org/api/http.html) module.
 
-Created because [`request`](https://github.com/request/request) is bloated *(several megabytes!)*.
-
+Created because [`request`](https://github.com/request/request) is bloated _(several megabytes!)_.
 
 ## Highlights
 
@@ -33,8 +32,6 @@ Created because [`request`](https://github.com/request/request) is bloated *(sev
 - [Errors with metadata](#errors)
 - [JSON mode](#json)
 - [WHATWG URL support](#url)
-- [Electron support](#useelectronnet)
-
 
 ## Install
 
@@ -46,15 +43,14 @@ $ npm install got
 	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
 </a>
 
-
 ## Usage
 
 ```js
-const got = require('got');
+const got = require("got");
 
 (async () => {
 	try {
-		const response = await got('sindresorhus.com');
+		const response = await got("sindresorhus.com");
 		console.log(response.body);
 		//=> '<!doctype html> ...'
 	} catch (error) {
@@ -67,15 +63,14 @@ const got = require('got');
 ###### Streams
 
 ```js
-const fs = require('fs');
-const got = require('got');
+const fs = require("fs");
+const got = require("got");
 
-got.stream('sindresorhus.com').pipe(fs.createWriteStream('index.html'));
+got.stream("sindresorhus.com").pipe(fs.createWriteStream("index.html"));
 
 // For POST, PUT, and PATCH methods `got.stream` returns a `stream.Writable`
-fs.createReadStream('index.html').pipe(got.stream.post('sindresorhus.com'));
+fs.createReadStream("index.html").pipe(got.stream.post("sindresorhus.com"));
 ```
-
 
 ### API
 
@@ -116,7 +111,7 @@ Returns a `Stream` instead of a `Promise`. This is equivalent to calling `got.st
 
 Type: `string` `Buffer` `stream.Readable`
 
-*This is mutually exclusive with stream mode.*
+_This is mutually exclusive with stream mode._
 
 Body that will be sent with a `POST` request.
 
@@ -136,7 +131,7 @@ Default: `'utf8'`
 Type: `boolean`<br>
 Default: `false`
 
-*This is mutually exclusive with stream mode.*
+_This is mutually exclusive with stream mode._
 
 If set to `true` and `Content-Type` header is not set, it will be set to `application/x-www-form-urlencoded`.
 
@@ -147,7 +142,7 @@ If set to `true` and `Content-Type` header is not set, it will be set to `applic
 Type: `boolean`<br>
 Default: `false`
 
-*This is mutually exclusive with stream mode.*
+_This is mutually exclusive with stream mode._
 
 If set to `true` and `Content-Type` header is not set, it will be set to `application/json`.
 
@@ -206,13 +201,6 @@ Default: `false`
 
 [Cache adapter instance](#cache-adapters) for storing cached data.
 
-###### useElectronNet
-
-Type: `boolean`<br>
-Default: `false`
-
-When used in Electron, Got will use [`electron.net`](https://electronjs.org/docs/api/net/) instead of the Node.js `http` module. According to the Electron docs, it should be fully compatible, but it's not entirely. See [#315](https://github.com/sindresorhus/got/issues/315).
-
 ###### throwHttpErrors
 
 Type: `boolean`<br>
@@ -235,8 +223,9 @@ If this is disabled, requests that encounter an error status code will be resolv
 **Tip**: You can use `request` event to abort request:
 
 ```js
-got.stream('github.com')
-	.on('request', req => setTimeout(() => req.abort(), 50));
+got
+	.stream("github.com")
+	.on("request", (req) => setTimeout(() => req.abort(), 50));
 ```
 
 ##### .on('response', response)
@@ -248,6 +237,7 @@ got.stream('github.com')
 `redirect` event to get the response object of a redirect. The second argument is options for the next request to the redirect location.
 
 ##### .on('uploadProgress', progress)
+
 ##### .on('downloadProgress', progress)
 
 Progress events for uploading (sending request) and downloading (receiving response). The `progress` argument is an object like:
@@ -266,11 +256,11 @@ If it's not possible to retrieve the body size (can happen when streaming), `tot
 
 ```js
 (async () => {
-	const response = await got('sindresorhus.com')
-		.on('downloadProgress', progress => {
+	const response = await got("sindresorhus.com")
+		.on("downloadProgress", (progress) => {
 			// Report download progress
 		})
-		.on('uploadProgress', progress => {
+		.on("uploadProgress", (progress) => {
 			// Report upload progress
 		});
 
@@ -283,14 +273,18 @@ If it's not possible to retrieve the body size (can happen when streaming), `tot
 `error` event emitted in case of protocol error (like `ENOTFOUND` etc.) or status error (4xx or 5xx). The second argument is the body of the server response in case of status error. The third argument is response object.
 
 #### got.get(url, [options])
+
 #### got.post(url, [options])
+
 #### got.put(url, [options])
+
 #### got.patch(url, [options])
+
 #### got.head(url, [options])
+
 #### got.delete(url, [options])
 
 Sets `options.method` to the method name and makes a request.
-
 
 ## Errors
 
@@ -330,7 +324,6 @@ When given an unsupported protocol.
 
 When the request is aborted with `.cancel()`.
 
-
 ## Aborting the request
 
 The promise returned by Got has a [`.cancel()`](https://github.com/sindresorhus/p-cancelable) method which, when called, aborts the request.
@@ -361,6 +354,7 @@ The promise returned by Got has a [`.cancel()`](https://github.com/sindresorhus/
 ```
 
 <a name="cache-adapters"></a>
+
 ## Cache
 
 Got implements [RFC 7234](http://httpwg.org/specs/rfc7234.html) compliant HTTP caching which works out of the box in memory or is easily pluggable with a wide range of storage adapters. Fresh cache entries are served directly from cache and stale cache entries are revalidated with `If-None-Match`/`If-Modified-Since` headers. You can read more about the underlying cache behaviour in the `cacheable-request` [documentation](https://github.com/lukechilds/cacheable-request).
@@ -368,17 +362,17 @@ Got implements [RFC 7234](http://httpwg.org/specs/rfc7234.html) compliant HTTP c
 You can use the JavaScript `Map` type as an in memory cache:
 
 ```js
-const got = require('got');
+const got = require("got");
 const map = new Map();
 
 (async () => {
-		let response = await got('sindresorhus.com', {cache: map});
-		console.log(response.fromCache);
-		//=> false
+	let response = await got("sindresorhus.com", { cache: map });
+	console.log(response.fromCache);
+	//=> false
 
-		response = await got('sindresorhus.com', {cache: map});
-		console.log(response.fromCache);
-		//=> true
+	response = await got("sindresorhus.com", { cache: map });
+	console.log(response.fromCache);
+	//=> true
 })();
 ```
 
@@ -389,12 +383,12 @@ $ npm install @keyv/redis
 ```
 
 ```js
-const got = require('got');
-const KeyvRedis = require('@keyv/redis');
+const got = require("got");
+const KeyvRedis = require("@keyv/redis");
 
-const redis = new KeyvRedis('redis://user:pass@localhost:6379');
+const redis = new KeyvRedis("redis://user:pass@localhost:6379");
 
-got('sindresorhus.com', {cache: redis});
+got("sindresorhus.com", { cache: redis });
 ```
 
 Got supports anything that follows the Map API, so it's easy to write your own storage adapter or use a third-party solution.
@@ -404,129 +398,125 @@ For example, the following are all valid storage adapters:
 ```js
 const storageAdapter = new Map();
 // or
-const storageAdapter = require('./my-storage-adapter');
+const storageAdapter = require("./my-storage-adapter");
 // or
-const QuickLRU = require('quick-lru');
-const storageAdapter = new QuickLRU({maxSize: 1000});
+const QuickLRU = require("quick-lru");
+const storageAdapter = new QuickLRU({ maxSize: 1000 });
 
-got('sindresorhus.com', {cache: storageAdapter});
+got("sindresorhus.com", { cache: storageAdapter });
 ```
 
 View the [Keyv docs](https://github.com/lukechilds/keyv) for more information on how to use storage adapters.
-
 
 ## Proxies
 
 You can use the [`tunnel`](https://github.com/koichik/node-tunnel) module with the `agent` option to work with proxies:
 
 ```js
-const got = require('got');
-const tunnel = require('tunnel');
+const got = require("got");
+const tunnel = require("tunnel");
 
-got('sindresorhus.com', {
+got("sindresorhus.com", {
 	agent: tunnel.httpOverHttp({
 		proxy: {
-			host: 'localhost'
-		}
-	})
+			host: "localhost",
+		},
+	}),
 });
 ```
 
 If you require different agents for different protocols, you can pass a map of agents to the `agent` option. This is necessary because a request to one protocol might redirect to another. In such a scenario, `got` will switch over to the right protocol agent for you.
 
 ```js
-const got = require('got');
-const HttpAgent = require('agentkeepalive');
+const got = require("got");
+const HttpAgent = require("agentkeepalive");
 const HttpsAgent = HttpAgent.HttpsAgent;
 
-got('sindresorhus.com', {
+got("sindresorhus.com", {
 	agent: {
 		http: new HttpAgent(),
-		https: new HttpsAgent()
-	}
+		https: new HttpsAgent(),
+	},
 });
 ```
-
 
 ## Cookies
 
 You can use the [`cookie`](https://github.com/jshttp/cookie) module to include cookies in a request:
 
 ```js
-const got = require('got');
-const cookie = require('cookie');
+const got = require("got");
+const cookie = require("cookie");
 
-got('google.com', {
+got("google.com", {
 	headers: {
-		cookie: cookie.serialize('foo', 'bar')
-	}
+		cookie: cookie.serialize("foo", "bar"),
+	},
 });
 ```
-
 
 ## Form data
 
 You can use the [`form-data`](https://github.com/form-data/form-data) module to create POST request with form data:
 
 ```js
-const fs = require('fs');
-const got = require('got');
-const FormData = require('form-data');
+const fs = require("fs");
+const got = require("got");
+const FormData = require("form-data");
 const form = new FormData();
 
-form.append('my_file', fs.createReadStream('/foo/bar.jpg'));
+form.append("my_file", fs.createReadStream("/foo/bar.jpg"));
 
-got.post('google.com', {
-	body: form
+got.post("google.com", {
+	body: form,
 });
 ```
-
 
 ## OAuth
 
 You can use the [`oauth-1.0a`](https://github.com/ddo/oauth-1.0a) module to create a signed OAuth request:
 
 ```js
-const got = require('got');
-const crypto  = require('crypto');
-const OAuth = require('oauth-1.0a');
+const got = require("got");
+const crypto = require("crypto");
+const OAuth = require("oauth-1.0a");
 
 const oauth = OAuth({
 	consumer: {
 		key: process.env.CONSUMER_KEY,
-		secret: process.env.CONSUMER_SECRET
+		secret: process.env.CONSUMER_SECRET,
 	},
-	signature_method: 'HMAC-SHA1',
-	hash_function: (baseString, key) => crypto.createHmac('sha1', key).update(baseString).digest('base64')
+	signature_method: "HMAC-SHA1",
+	hash_function: (baseString, key) =>
+		crypto.createHmac("sha1", key).update(baseString).digest("base64"),
 });
 
 const token = {
 	key: process.env.ACCESS_TOKEN,
-	secret: process.env.ACCESS_TOKEN_SECRET
+	secret: process.env.ACCESS_TOKEN_SECRET,
 };
 
-const url = 'https://api.twitter.com/1.1/statuses/home_timeline.json';
+const url = "https://api.twitter.com/1.1/statuses/home_timeline.json";
 
 got(url, {
-	headers: oauth.toHeader(oauth.authorize({url, method: 'GET'}, token)),
-	json: true
+	headers: oauth.toHeader(oauth.authorize({ url, method: "GET" }, token)),
+	json: true,
 });
 ```
-
 
 ## Unix Domain Sockets
 
 Requests can also be sent via [unix domain sockets](http://serverfault.com/questions/124517/whats-the-difference-between-unix-socket-and-tcp-ip-socket). Use the following URL scheme: `PROTOCOL://unix:SOCKET:PATH`.
 
-- `PROTOCOL` - `http` or `https` *(optional)*
+- `PROTOCOL` - `http` or `https` _(optional)_
 - `SOCKET` - absolute path to a unix domain socket, e.g. `/var/run/docker.sock`
 - `PATH` - request path, e.g. `/v2/keys`
 
 ```js
-got('http://unix:/var/run/docker.sock:/containers/json');
+got("http://unix:/var/run/docker.sock:/containers/json");
 
 // or without protocol (http by default)
-got('unix:/var/run/docker.sock:/containers/json');
+got("unix:/var/run/docker.sock:/containers/json");
 ```
 
 ## AWS
@@ -534,11 +524,11 @@ got('unix:/var/run/docker.sock:/containers/json');
 Requests to AWS services need to have their headers signed. This can be accomplished by using the [`aws4`](https://www.npmjs.com/package/aws4) package. This is an example for querying an ["Elasticsearch Service"](https://aws.amazon.com/elasticsearch-service/) host with a signed request.
 
 ```js
-const url = require('url');
-const AWS = require('aws-sdk');
-const aws4 = require('aws4');
-const got = require('got');
-const config = require('./config');
+const url = require("url");
+const AWS = require("aws-sdk");
+const aws4 = require("aws4");
+const got = require("got");
+const config = require("./config");
 
 // Reads keys from the environment or `~/.aws/credentials`. Could be a plain object.
 const awsConfig = new AWS.Config({ region: config.region });
@@ -547,11 +537,11 @@ function request(uri, options) {
 	const awsOpts = {
 		region: awsConfig.region,
 		headers: {
-			accept: 'application/json',
-			'content-type': 'application/json'
+			accept: "application/json",
+			"content-type": "application/json",
 		},
-		method: 'GET',
-		json: true
+		method: "GET",
+		json: true,
 	};
 
 	// We need to parse the URL before passing it to `got` so `aws4` can sign the request
@@ -568,21 +558,18 @@ request(`https://${config.host}/production/`, {
 });
 ```
 
-
 ## Testing
 
 You can test your requests by using the [`nock`](https://github.com/node-nock/nock) module to mock an endpoint:
 
 ```js
-const got = require('got');
-const nock = require('nock');
+const got = require("got");
+const nock = require("nock");
 
-nock('https://sindresorhus.com')
-	.get('/')
-	.reply(200, 'Hello world!');
+nock("https://sindresorhus.com").get("/").reply(200, "Hello world!");
 
 (async () => {
-	const response = await got('sindresorhus.com');
+	const response = await got("sindresorhus.com");
 	console.log(response.body);
 	//=> 'Hello world!'
 })();
@@ -591,12 +578,12 @@ nock('https://sindresorhus.com')
 If you need real integration tests you can use [`create-test-server`](https://github.com/lukechilds/create-test-server):
 
 ```js
-const got = require('got');
-const createTestServer = require('create-test-server');
+const got = require("got");
+const createTestServer = require("create-test-server");
 
 (async () => {
 	const server = await createTestServer();
-	server.get('/', 'Hello world!');
+	server.get("/", "Hello world!");
 
 	const response = await got(server.url);
 	console.log(response.body);
@@ -606,7 +593,6 @@ const createTestServer = require('create-test-server');
 })();
 ```
 
-
 ## Tips
 
 ### User Agent
@@ -614,20 +600,19 @@ const createTestServer = require('create-test-server');
 It's a good idea to set the `'user-agent'` header so the provider can more easily see how their resource is used. By default, it's the URL to this repo.
 
 ```js
-const got = require('got');
-const pkg = require('./package.json');
+const got = require("got");
+const pkg = require("./package.json");
 
-got('sindresorhus.com', {
+got("sindresorhus.com", {
 	headers: {
-		'user-agent': `my-module/${pkg.version} (https://github.com/username/my-module)`
-	}
+		"user-agent": `my-module/${pkg.version} (https://github.com/username/my-module)`,
+	},
 });
 ```
 
 ### 304 Responses
 
 Bear in mind, if you send an `if-modified-since` header and receive a `304 Not Modified` response, the body will be empty. It's your responsibility to cache and retrieve the body contents.
-
 
 ## Related
 
@@ -637,13 +622,11 @@ Bear in mind, if you send an `if-modified-since` header and receive a `304 Not M
 - [graphql-got](https://github.com/kevva/graphql-got) - Got convenience wrapper to interact with GraphQL
 - [GotQL](https://github.com/khaosdoctor/gotql) - Got convenience wrapper to interact with GraphQL using JSON-parsed queries instead of strings
 
-
 ## Created by
 
-[![Sindre Sorhus](https://github.com/sindresorhus.png?size=100)](https://sindresorhus.com) | [![Vsevolod Strukchinsky](https://github.com/floatdrop.png?size=100)](https://github.com/floatdrop) | [![Alexander Tesfamichael](https://github.com/AlexTes.png?size=100)](https://github.com/AlexTes) | [![Luke Childs](https://github.com/lukechilds.png?size=100)](https://github.com/lukechilds)
----|---|---|---
-[Sindre Sorhus](https://sindresorhus.com) | [Vsevolod Strukchinsky](https://github.com/floatdrop) | [Alexander Tesfamichael](https://alextes.me) | [Luke Childs](https://github.com/lukechilds)
-
+| [![Sindre Sorhus](https://github.com/sindresorhus.png?size=100)](https://sindresorhus.com) | [![Vsevolod Strukchinsky](https://github.com/floatdrop.png?size=100)](https://github.com/floatdrop) | [![Alexander Tesfamichael](https://github.com/AlexTes.png?size=100)](https://github.com/AlexTes) | [![Luke Childs](https://github.com/lukechilds.png?size=100)](https://github.com/lukechilds) |
+| ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| [Sindre Sorhus](https://sindresorhus.com)                                                  | [Vsevolod Strukchinsky](https://github.com/floatdrop)                                               | [Alexander Tesfamichael](https://alextes.me)                                                     | [Luke Childs](https://github.com/lukechilds)                                                |
 
 ## License
 
