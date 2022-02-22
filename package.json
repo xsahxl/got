@@ -89,5 +89,9 @@
 	},
 	"browser": {
 		"decompress-response": false
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org"
 	}
 }
